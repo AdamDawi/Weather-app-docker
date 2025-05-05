@@ -15,24 +15,34 @@ Dockerfile: [Plik Dockerfile](Dockerfile)
 ## 3. Budowanie, uruchamianie oraz analiza kontenera
 Poniżej przedstawiam komplet poleceń niezbędnych do obsługi obrazu aplikacji pogodowej stworzonej w punktach wcześniejszych.
 
-a) Budowanie obrazu kontenera
+**a) Budowanie obrazu kontenera**
 ```bash
 docker build -t zad1_docker .
 ```
 
-b) Uruchomienie kontenera na podstawie zbudowanego obrazu
+**b) Uruchomienie kontenera na podstawie zbudowanego obrazu**
 ```bash
 docker run -d --rm --name zad1_docker_test -p 3000:3000 zad1_docker
 ```
+**Komentarz:**<br>
+`-d` – uruchamia kontener w tle (tzw. detached mode),
+
+`--rm` – automatycznie usuwa kontener po jego zatrzymaniu,
+
+`--name zad1_docker_test` – nadaje kontenerowi czytelną nazwę zad1_docker_test,
+
+`-p 3000:3000` – przekierowuje port lokalny 3000 na port 3000 wewnątrz kontenera (umożliwia dostęp do aplikacji np. przez http://localhost:3000),
+
+`zad1_docker` – nazwa obrazu, na podstawie którego uruchamiany jest kontener.<br>
 ![Image](https://github.com/user-attachments/assets/db91a8c4-d635-477d-9beb-30e1cf8eaceb)
 
-c) Wyświetlenie logów aplikacji uruchomionej w kontenerze
+**c) Wyświetlenie logów aplikacji uruchomionej w kontenerze**
 ```bash
 docker logs zad1_docker_test
 ```
 ![Image](https://github.com/user-attachments/assets/515a9e4f-7284-4b32-b902-98412869ed4b)
 
-d) Sprawdzenie liczby warstw oraz rozmiaru zbudowanego obrazu
+**d) Sprawdzenie liczby warstw oraz rozmiaru zbudowanego obrazu**
 ```bash
 docker history zad1_docker
 ```
