@@ -16,7 +16,6 @@ Dockerfile: [Plik Dockerfile](Dockerfile)
 Poniżej przedstawiam komplet poleceń niezbędnych do obsługi obrazu aplikacji pogodowej stworzonej w punktach wcześniejszych.
 
 a) Budowanie obrazu kontenera
-
 ```bash
 docker build -t zad1_docker .
 ```
@@ -25,23 +24,21 @@ b) Uruchomienie kontenera na podstawie zbudowanego obrazu
 ```bash
 docker run -d --rm --name zad1_docker_test -p 3000:3000 zad1_docker
 ```
+![Image](https://github.com/user-attachments/assets/db91a8c4-d635-477d-9beb-30e1cf8eaceb)
 
 c) Wyświetlenie logów aplikacji uruchomionej w kontenerze
 ```bash
 docker logs zad1_docker_test
 ```
-Działanie:
 ![Image](https://github.com/user-attachments/assets/515a9e4f-7284-4b32-b902-98412869ed4b)
 
 d) Sprawdzenie liczby warstw oraz rozmiaru zbudowanego obrazu
 ```bash
 docker history zad1_docker
 ```
-Działanie:
 ![Image](https://github.com/user-attachments/assets/0044c520-8e15-4702-a920-0487ea6b994c)
 
 ```bash
 docker images zad1_docker
 ```
-Całkowity rozmiar obrazu:
 ![Image](https://github.com/user-attachments/assets/73223f2a-52a8-43f5-b055-303f102ca018)
