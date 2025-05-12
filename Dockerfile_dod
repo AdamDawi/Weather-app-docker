@@ -1,0 +1,34 @@
+FROM --platform=$BUILDPLATFORM node:20-alpine AS builder
+
+LABEL org.opencontainers.image.authors="Adam Dawidziuk"
+
+WORKDIR /usr/app
+
+# Instalacja git
+RUN apk add --no-cache git
+
+# Użycie sekretu do autoryzacji
+RUN --mount=type=secret,id=GITHUB_TOKEN git clone https://github.com/AdamDawi/Weather-app-docker .
+
+# Dodanie package.json i instalacja tylko produkcyjnych zależności
+COPY package.json ./
+RUN npm install --production
+
+# Kopiowanie pozostałej zawartość projektu
+COPY index.js ./
+COPY public ./public
+
+FROM node:20-alpine
+
+WORKDIR /usr/app
+
+RUN apk add --no-cache curl
+
+COPY --from=builder /usr/app /usr/app
+
+EXPOSE 3000
+
+HEALTHCHECK --interval=10s --timeout=1s \
+  CMD curl -f http://localhost:3000/ || exit 1
+
+CMD ["node", "index.js"]

@@ -33,7 +33,7 @@ docker run -d --rm --name zad1_docker_test -p 3000:3000 zad1_docker
 
 `-p 3000:3000` – przekierowuje port lokalny 3000 na port 3000 wewnątrz kontenera (umożliwia dostęp do aplikacji np. przez http://localhost:3000),
 
-`zad1_docker` – nazwa obrazu, na podstawie którego uruchamiany jest kontener.<br>
+`zad1_docker` – nazwa obrazu, na podstawie którego uruchamiany jest kontener.<br><br>
 ![Image](https://github.com/user-attachments/assets/db91a8c4-d635-477d-9beb-30e1cf8eaceb)
 
 **c) Wyświetlenie logów aplikacji uruchomionej w kontenerze**
