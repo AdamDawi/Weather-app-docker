@@ -17,7 +17,7 @@ docker buildx create --name multiarch-builder --use
 ```
 ![Image](https://github.com/user-attachments/assets/1bc4e481-0349-4404-afdf-1efebf3d9590)
 
-**Potwierdzenie stworzenia buildera**
+**Potwierdzenie stworzenia buildera:**
 ```bash
 docker buildx inspect --bootstrap
 ```
@@ -30,6 +30,7 @@ docker buildx build --platform linux/amd64,linux/arm64 --file Dockerfile_dod --t
 ![Image](https://github.com/user-attachments/assets/565920c9-af5e-4b5f-a24a-7f2a4d09d5de)
 
 ## 3. Potwierdzenie obecności manifestu dla wielu platform
+Potwierdzenie, że manifest obrazu zawiera wpisy dla obu platform sprzętowych (linux/amd64 oraz linux/arm64):
 ```bash
 docker buildx imagetools inspect adamdawi/weather-app:latest
 ```
@@ -51,12 +52,12 @@ docker scout cves --platform linux/amd64 adamdawi/weather-app:latest
 
 ## 5. Aktualizacja zależności i ponowne budowanie
 Zmieniono `package.json`:
-🔧 1. Zaktualizuj zależność cross-spawn:
 ```json
 "cross-spawn": "^7.0.5"
 ```
 
 **Zmiana wersji cross-spawn w dependencies:**
+<br>
 ![Image](https://github.com/user-attachments/assets/6c63e099-6e8c-49d2-8b6d-b09878c45766)
 
 **Pełne ponowne budowanie bez użycia cache lokalnego:**
@@ -65,6 +66,8 @@ docker buildx build --platform linux/amd64,linux/arm64 --file Dockerfile_dod --t
 ```
 ![Image](https://github.com/user-attachments/assets/f27a32d2-361d-463d-b5f5-911d728eae57)
 
-## 6. Potwierdzenie użycia cache
+## 6. Potwierdzenie użycia cache i publikacji obrazu w Docker Hub
+Zrzuty ekranu potwierdzają, że podczas budowy obrazu wykorzystywany był cache zapisany wcześniej w rejestrze (`registry backend, mode=max`).
+![Image](https://github.com/user-attachments/assets/164acf63-0658-4c5a-a5ad-b87282bbd567)
 ![Image](https://github.com/user-attachments/assets/08adc9de-3f4a-4960-9ce0-1716ae0bbe5d)
 ![Image](https://github.com/user-attachments/assets/9b6bafc8-ab50-441f-8630-ac9a61f1883f)

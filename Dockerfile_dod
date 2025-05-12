@@ -1,30 +1,39 @@
+# Etap 1: Budowanie aplikacji i instalacja zależności
+# Ustawienie platformy docelowej i rozpoczęcie etapu budowania z obrazem node na Alpine
 FROM --platform=$BUILDPLATFORM node:20-alpine AS builder
 
+# Oznaczenie autora zgodne ze standardem OCI
 LABEL org.opencontainers.image.authors="Adam Dawidziuk"
 
+# Ustawienie katalogu roboczego
 WORKDIR /usr/app
 
-# Instalacja git
+# Instalacja narzędzia git
 RUN apk add --no-cache git
 
-# Użycie sekretu do autoryzacji
+# Klonowanie repozytorium z GitHub z wykorzystaniem sekretu do autoryzacji
 RUN --mount=type=secret,id=GITHUB_TOKEN git clone https://github.com/AdamDawi/Weather-app-docker .
 
-# Instalacja produkcyjnych zależności
+# Instalacja tylko produkcyjnych zależności
 RUN npm install --production
 
+# Etap 2: Obraz końcowy
 FROM node:20-alpine
 
+# Ustawienie katalogu roboczego
 WORKDIR /usr/app
 
+# Instalacja curl
 RUN apk add --no-cache curl
 
-# Kopiowanie całego projektu ze środowiska budowania
+# Kopiowanie aplikacji z etapu budowania
 COPY --from=builder /usr/app /usr/app
 
+# Wystawienie portu
 EXPOSE 3000
 
 HEALTHCHECK --interval=10s --timeout=1s \
   CMD curl -f http://localhost:3000/ || exit 1
 
-CMD ["node", "index.js"]
+# Uruchomienie aplikacji
+CMD ["index.js"]
